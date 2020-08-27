@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  asis:
+    image: pydemic/asis:test
+    environment:
+      GITHUB_EVENT_NAME: ${GITHUB_EVENT_NAME}
+      GITHUB_EVENT_PATH: /tmp/event.json
+      GITHUB_REF: ${GITHUB_REF}
+      GITHUB_SHA: ${GITHUB_SHA}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+    volumes:
+      - ${GITHUB_EVENT_PATH}:/tmp/event.json
+      - ../../../.git:/app/.git
+      - ../../../assets/css:/app/assets/css
+      - ../../../assets/js:/app/assets/js
+      - ../../../assets/static:/app/assets/static
+      - ../../../assets/.babelrc:/app/assets/.babelrc
+      - ../../../assets/webpack.config.js:/app/assets/webpack.config.js
+      - ../../../lib:/app/lib
+      - ../../../priv:/app/priv
+      - ../../../test:/app/test
+      - ../../../.credo.exs:/app/.credo.exs
+      - ../../../.formatter.exs:/app/.formatter.exs
+      - ../../../coveralls.json:/app/coveralls.json
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:12.3
+    environment:
+      POSTGRES_DB: asis_test
+      POSTGRES_USER: asis
+      POSTGRES_PASSWORD: asis

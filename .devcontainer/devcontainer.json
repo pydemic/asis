@@ -1,0 +1,58 @@
+{
+  "name": "ASIS",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "asis",
+  "workspaceFolder": "/app",
+  "shutdownAction": "none",
+  "extensions": [
+    "davidanson.vscode-markdownlint",
+    "HookyQR.beautify",
+    "jakebecker.elixir-ls",
+    "mechatroner.rainbow-csv",
+    "mrorz.language-gettext",
+    "stkb.rewrap",
+    "sysoev.language-stylus",
+    "yzhang.markdown-all-in-one"
+  ],
+  "settings": {
+    "beautify.language": {
+      "js": {
+        "type": [
+          "javascript",
+          "json",
+          "jsonc"
+        ],
+        "filename": [
+          ".jshintrc",
+          ".jsbeautifyrc"
+        ]
+      },
+      "css": [
+        "css",
+        "less",
+        "scss"
+      ],
+      "html": [
+        "htm",
+        "html",
+        "html-eex"
+      ]
+    },
+    "editor.formatOnSave": true,
+    "emmet.includeLanguages": {
+      "html-eex": "html"
+    },
+    "elixir.autoSpawnElixirSenseServers": true,
+    "elixir.useElixirSense": true,
+    "files.associations": {
+      "*.eex": "html-eex",
+      "*.leex": "html-eex"
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "[html-eex]": {
+      "editor.defaultFormatter": "HookyQR.beautify"
+    }
+  }
+}

@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  asis:
+    image: pydemic/asis:dev
+    container_name: asis
+    volumes:
+      - ..:/app
+      - mix:/root/.mix
+      - vscode:/root/.vscode-server-insiders
+    ports:
+      - 4000:4000
+    networks:
+      - network
+    depends_on:
+      - postgres
+
+  metabase:
+    image: metabase/metabase:v0.36.2
+    container_name: asis_metabase
+    environment:
+      MB_DB_FILE: /metabase-data/metabase.db
+      JAVA_TIMEZONE: America/Sao_Paulo
+    volumes:
+      - ../.misc/metabase:/metabase-data
+    ports:
+      - 3000:3000
+    networks:
+      - network
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:12.3
+    container_name: asis_postgres
+    environment:
+      POSTGRES_DB: asis_dev
+      POSTGRES_USER: asis
+      POSTGRES_PASSWORD: asis
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - network
+
+networks:
+  network:
+    name: asis
+
+volumes:
+  mix:
+    name: asis_mix
+
+  postgres:
+    name: asis_postgres
+
+  vscode:
+    name: asis_vscode

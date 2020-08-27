@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  asis:
+    image: pydemic/asis:prod
+    restart: unless-stopped
+    environment:
+      ASIS__HTTPS: 'false'
+      ASIS__HOSTNAME: localhost
+      ASIS__ORIGIN_HOSTNAMES: '//localhost'
+      ASIS__SECRET_KEY_BASE: 'Cd6TFymxTTCv5s3N96AbHsZr7g2TvpRVsM+uG9La9OfNQNaF4yaMhSTmiOBPxmmr'
+    ports:
+      - 80:80
+    depends_on:
+      - postgres
+
+  metabase:
+    image: metabase/metabase:v0.36.2
+    restart: unless-stopped
+    environment:
+      MB_DB_FILE: /metabase-data/metabase.db
+      JAVA_TIMEZONE: America/Sao_Paulo
+    volumes:
+      - ../../metabase:/metabase-data
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:12.3
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: asis
+      POSTGRES_USER: asis
+      POSTGRES_PASSWORD: asis
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres:
+    name: asis_prod_postgres

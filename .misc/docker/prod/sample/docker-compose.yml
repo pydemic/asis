@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  asis:
+    image: pydemic/asis:prod
+    restart: unless-stopped
+    environment:
+      ASIS__HTTPS: 'true'
+      ASIS__CACERTFILE_PATH: /app/chain.pem
+      ASIS__CERTFILE_PATH: /app/cert.pem
+      ASIS__KEYFILE_PATH: /app/privkey.pem
+      ASIS__HOSTNAME: YOUR_HOSTNAME
+      ASIS__ORIGIN_HOSTNAMES: '//YOUR_HOSTNAME'
+      ASIS__SECRET_KEY_BASE: GENERATE_ONE_WITH_MIX_PHX_GEN_SECRET
+    volumes:
+      - /etc/letsencrypt/live/YOUR_HOSTNAME/chain.pem:/app/chain.pem
+      - /etc/letsencrypt/live/YOUR_HOSTNAME/cert.pem:/app/cert.pem
+      - /etc/letsencrypt/live/YOUR_HOSTNAME/privkey.pem:/app/privkey.pem
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - postgres
+
+  metabase:
+    image: metabase/metabase:v0.36.2
+    restart: unless-stopped
+    environment:
+      MB_DB_FILE: /metabase-data/metabase.db
+      JAVA_TIMEZONE: America/Sao_Paulo
+    volumes:
+      - ./metabase:/metabase-data
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:12.3
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: asis
+      POSTGRES_USER: asis
+      POSTGRES_PASSWORD: asis
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres:
+    name: asis_postgres
