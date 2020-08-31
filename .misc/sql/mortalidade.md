@@ -3,14 +3,14 @@
 ## Mortalidade proporcional por idade
 
 ```sql
-SELECT "public"."cities"."name" as "cidade", codmunres as "cod_cidade",
-    COUNT(codmunres) as "mortes totais (independente de idade)",
-    COUNT(CASE WHEN idade > 0 THEN 1 END) as "total_com_idade",
-    (CAST(COUNT(CASE WHEN idade <= 400 THEN 1 END) as FLOAT)/ COUNT(CASE WHEN idade > 0 THEN 1 END) * 100) as "Menor de 1 ano",
-    (CAST(COUNT(CASE WHEN (idade >= 401 and idade <= 405) THEN 1 END) as FLOAT)/  COUNT(CASE WHEN idade > 0 THEN 1 END) * 100) as "1 a 5 anos",
-    (CAST(COUNT(CASE WHEN (idade >= 406 and idade <= 409) THEN 1 END) as FLOAT)/  COUNT(CASE WHEN idade > 0 THEN 1 END) * 100) as "6 a 9 anos",
-    (CAST(COUNT(CASE WHEN (idade >= 410 and idade <= 417) THEN 1 END) as FLOAT)/  COUNT(CASE WHEN idade > 0 THEN 1 END) * 100) as "10 a 17 anos",
-    (CAST(COUNT(CASE WHEN (idade >= 418 and idade <= 439) THEN 1 END) as FLOAT)/  COUNT(CASE WHEN idade > 0 THEN 1 END) * 100) as "18 a 39 anos",
+SELECT "public"."cities"."name" as "Município", codmunres as "Código Município", 
+    COUNT(codmunres) as "Óbitos totais",
+    COUNT(CASE WHEN idade > 0 THEN 1 END) as "Óbitos totais com Idade registrada",
+    (CAST(COUNT(CASE WHEN idade <= 400 THEN 1 END) as FLOAT)/ COUNT(CASE WHEN idade > 0 THEN 1 END) * 100) as "Menos de 1 ano",
+    (CAST(COUNT(CASE WHEN (idade >= 401 and idade <= 404) THEN 1 END) as FLOAT)/  COUNT(CASE WHEN idade > 0 THEN 1 END) * 100) as "1 a 4 anos",
+    (CAST(COUNT(CASE WHEN (idade >= 405 and idade <= 409) THEN 1 END) as FLOAT)/  COUNT(CASE WHEN idade > 0 THEN 1 END) * 100) as "5 a 9 anos",
+    (CAST(COUNT(CASE WHEN (idade >= 410 and idade <= 419) THEN 1 END) as FLOAT)/  COUNT(CASE WHEN idade > 0 THEN 1 END) * 100) as "10 a 19 anos",
+    (CAST(COUNT(CASE WHEN (idade >= 420 and idade <= 439) THEN 1 END) as FLOAT)/  COUNT(CASE WHEN idade > 0 THEN 1 END) * 100) as "20 a 39 anos",
     (CAST(COUNT(CASE WHEN (idade >= 440 and idade <= 459) THEN 1 END) as FLOAT)/  COUNT(CASE WHEN idade > 0 THEN 1 END) * 100) as "40 a 59 anos",
     (CAST(COUNT(CASE WHEN (idade >= 460 and idade <= 479) THEN 1 END) as FLOAT)/  COUNT(CASE WHEN idade > 0 THEN 1 END) * 100) as "60 a 79 anos",
     (CAST(COUNT(CASE WHEN (idade >= 480) THEN 1 END) as FLOAT)/ COUNT(CASE WHEN idade > 0 THEN 1 END) * 100) as "80+ anos"
