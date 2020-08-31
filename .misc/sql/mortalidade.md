@@ -152,8 +152,8 @@ LIMIT 1048576
 ## Proporção de óbitos por causas mal definidas
 
 ```sql
-SELECT "CT_ID" AS "city_id", "Cidade", CAST("mal_def_total" AS FLOAT) / "total_mortes" * 100 AS "Proporção" FROM (
-    SELECT CT.name AS "Cidade", COUNT(CH.id) AS "mal_def_total", CT.id AS "CT_ID" FROM death_registries
+SELECT "CT_ID" AS "Código Município", "Município", "mal_def_total" as "Total de óbitos mal definidos", "total_mortes" as "Total de Óbitos", CAST("mal_def_total" AS FLOAT) / "total_mortes" * 100 AS "Proporção" FROM (
+    SELECT CT.name AS "Município", COUNT(CH.id) AS "mal_def_total", CT.id AS "CT_ID" FROM death_registries
     JOIN cities AS CT ON CT.id = death_registries.codmunres
     JOIN block_diseases AS BD ON BD.disease_id = death_registries.disease_id
     JOIN blocks AS B ON B.id = BD.block_id
@@ -172,7 +172,7 @@ ON "total mortes"."INNER_CT" = "mal_def"."CT_ID"
 ## Proporção de óbitos por doença diarréica aguda em menores de 5 anos de idade
 
 ```sql
-SELECT "criancas_mortes_totais_diarreia"."city_id", "criancas_mortes_totais_diarreia"."Cidade", CAST("criancas_mortes_totais_diarreia"."value" AS FLOAT) / "criancas_mortes_totais_def"."value" * 100 AS "Proporção" FROM (
+SELECT "criancas_mortes_totais_diarreia"."city_id" as "Código Município","criancas_mortes_totais_diarreia"."value" as "Óbitos totais por doença diarréica em menores de 5 anos",  "criancas_mortes_totais_def"."value" as "Óbitos totais em menores de 5 anos com causa definida", "criancas_mortes_totais_diarreia"."Cidade", CAST("criancas_mortes_totais_diarreia"."value" AS FLOAT) / "criancas_mortes_totais_def"."value" * 100 AS "Proporção" FROM (
     SELECT CT.name AS "Cidade", COUNT(death_registries.codmunres) AS "value", CT.id AS "city_id" FROM death_registries
     JOIN cities AS CT ON CT.id = death_registries.codmunres
     JOIN block_diseases AS BD ON BD.disease_id = death_registries.disease_id
@@ -197,7 +197,7 @@ ON "criancas_mortes_totais_def"."city_id" = "criancas_mortes_totais_diarreia"."c
 ## Proporção de óbitos por infecção respiratória aguda em menores de 5 anos de idade
 
 ```sql
-SELECT criancas_mortes_totais_def."Cidade", criancas_mortes_totais_respiratoria.codmunres AS "city_id", COUNT(criancas_mortes_totais_respiratoria.codmunres) / CAST("criancas_mortes_totais_def"."TOTAL_CASES" AS FLOAT) * 100 AS "Proporção" FROM (
+SELECT criancas_mortes_totais_def."Cidade" as "Município",COUNT(criancas_mortes_totais_respiratoria.codmunres) as "Óbitos em menores de 5 anos por infecção respiratória aguda","criancas_mortes_totais_def"."TOTAL_CASES" as "Óbitos de menores de 5 anos com causas definidas", COUNT(criancas_mortes_totais_respiratoria.codmunres) / CAST("criancas_mortes_totais_def"."TOTAL_CASES" AS FLOAT) * 100 AS "Proporção" FROM (
         SELECT death_registries.idade, death_registries.codmunres, death_registries.disease_id, blocks.chapter_id FROM death_registries, block_diseases, blocks
         WHERE death_registries.disease_id = block_diseases.disease_id AND block_diseases.block_id = blocks.id AND block_diseases.block_id IN ('J00-J06', 'J09-J18', 'J20-J22') AND death_registries.idade < 405
         GROUP BY death_registries.disease_id,  blocks.chapter_id, death_registries.codmunres, death_registries.idade
@@ -214,6 +214,7 @@ LEFT JOIN (
 ) AS "criancas_mortes_totais_def" ON criancas_mortes_totais_respiratoria.codmunres = "criancas_mortes_totais_def"."city_id"
 JOIN cities AS C ON "criancas_mortes_totais_respiratoria".codmunres = C.id
 GROUP BY criancas_mortes_totais_respiratoria.codmunres, "criancas_mortes_totais_def"."TOTAL_CASES", criancas_mortes_totais_def."Cidade"
+
 ```
 
 ## Taxa de mortalidade específica por doenças do aparelho circulatório
