@@ -5,6 +5,8 @@ defmodule Asis.Release.Seeders.CSVSeeder do
 
   require Logger
 
+  @app :asis
+
   @spec seed(String.t(), (list() -> :ok), keyword()) :: :ok
   def seed(csv_file_path, seeder_function, opts \\ []) do
     Logger.debug("Seeding #{csv_file_path}")
@@ -13,8 +15,9 @@ defmodule Asis.Release.Seeders.CSVSeeder do
     Logger.configure(level: :warn)
 
     try do
-      File.cwd!()
-      |> Path.join("priv/data/")
+      @app
+      |> :code.priv_dir()
+      |> Path.join("data")
       |> Path.join(csv_file_path)
       |> File.stream!()
       |> get_csv_parser(Keyword.get(opts, :csv_type)).parse_stream()
