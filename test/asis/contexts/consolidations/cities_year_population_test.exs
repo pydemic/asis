@@ -52,7 +52,19 @@ defmodule Asis.Contexts.Consolidations.CitiesYearPopulationTest do
     attrs = %{id: 14_001, name: "Boa Vista", abbr: "Boa Vista", lat: 0.0, lng: 0.0, mesoregion_id: mesoregion_id}
     {:ok, %{id: microregion_id}} = Geo.Microregions.create(attrs)
 
-    attrs = %{id: 140_002, name: "Amajari", abbr: "Amajari", lat: 0.0, lng: 0.0, microregion_id: microregion_id}
+    attrs = %{id: -1401, name: "Centro Norte de Roraima", abbr: "CNRR", lat: 0.0, lng: 0.0, state_id: state_id}
+    {:ok, %{id: health_region_id}} = Geo.HealthRegions.create(attrs)
+
+    attrs = %{
+      id: 140_002,
+      name: "Amajari",
+      abbr: "Amajari",
+      lat: 0.0,
+      lng: 0.0,
+      microregion_id: microregion_id,
+      health_region_id: health_region_id
+    }
+
     {:ok, %{id: city_id}} = Geo.Cities.create(attrs)
 
     city_id

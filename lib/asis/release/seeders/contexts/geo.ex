@@ -14,6 +14,7 @@ defmodule Asis.Release.Seeders.Contexts.Geo do
     Geo.State.seed(opts)
     Geo.Mesoregion.seed(opts)
     Geo.Microregion.seed(opts)
+    Geo.HealthRegion.seed(opts)
     Geo.City.seed(opts)
   end
 end

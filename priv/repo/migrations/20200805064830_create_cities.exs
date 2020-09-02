@@ -15,6 +15,7 @@ defmodule Asis.Repo.Migrations.CreateCities do
       add :state_id, references(:states, on_delete: :delete_all), null: false
       add :mesoregion_id, references(:mesoregions, on_delete: :delete_all), null: false
       add :microregion_id, references(:microregions, on_delete: :delete_all), null: false
+      add :health_region_id, references(:health_regions, on_delete: :delete_all), null: false
     end
 
     create index(:cities, [:world_id])
@@ -24,5 +25,6 @@ defmodule Asis.Repo.Migrations.CreateCities do
     create index(:cities, [:state_id])
     create index(:cities, [:mesoregion_id])
     create index(:cities, [:microregion_id])
+    create index(:cities, [:health_region_id])
   end
 end

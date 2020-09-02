@@ -24,6 +24,7 @@ defmodule Asis.Contexts.Geo.State do
 
     has_many :mesoregions, Geo.Mesoregion
     has_many :microregions, Geo.Microregion
+    has_many :heath_regions, Geo.HealthRegion
     has_many :cities, Geo.City
   end
 

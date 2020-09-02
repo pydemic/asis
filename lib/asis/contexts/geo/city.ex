@@ -21,6 +21,7 @@ defmodule Asis.Contexts.Geo.City do
 
     belongs_to :microregion, Geo.Microregion
     belongs_to :mesoregion, Geo.Mesoregion
+    belongs_to :health_region, Geo.HealthRegion
     belongs_to :state, Geo.State
     belongs_to :region, Geo.Region
     belongs_to :country, Geo.Country
@@ -48,6 +49,7 @@ defmodule Asis.Contexts.Geo.City do
       :lng,
       :microregion_id,
       :mesoregion_id,
+      :health_region_id,
       :state_id,
       :region_id,
       :country_id,

@@ -14,7 +14,7 @@ defmodule Asis.Release.Seeders.Contexts.Geo.City do
     CSVSeeder.seed(@path, &parse_and_seed/1, opts)
   end
 
-  defp parse_and_seed([id, name, abbr, lat, lng, microregion_id]) do
+  defp parse_and_seed([id, name, abbr, lat, lng, microregion_id, health_region_id]) do
     {:ok, _city} =
       %{
         id: String.to_integer(id),
@@ -22,7 +22,8 @@ defmodule Asis.Release.Seeders.Contexts.Geo.City do
         abbr: abbr,
         lat: String.to_float(lat),
         lng: String.to_float(lng),
-        microregion_id: String.to_integer(microregion_id)
+        microregion_id: String.to_integer(microregion_id),
+        health_region_id: String.to_integer(health_region_id)
       }
       |> Geo.Cities.create()
   rescue
