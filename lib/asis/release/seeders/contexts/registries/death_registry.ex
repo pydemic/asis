@@ -7,14 +7,16 @@ defmodule Asis.Release.Seeders.Contexts.Registries.DeathRegistry do
   alias Asis.Contexts.Registries
   alias Asis.Release.Seeders.CSVSeeder
 
-  @path "registries/death_registries.csv"
+  @path "registries/br/rr/death_registries"
 
   @spec seed(keyword()) :: :ok
   def seed(opts \\ []) do
-    CSVSeeder.seed(@path, &parse_and_seed/1, opts)
+    CSVSeeder.seed(Path.join(@path, "2018.csv"), &parse_and_seed/1, opts)
+    CSVSeeder.seed(Path.join(@path, "2019.csv"), &parse_and_seed/1, opts)
+    CSVSeeder.seed(Path.join(@path, "2020.csv"), &parse_and_seed/1, opts)
   end
 
-  @fields [numerodo: :integer, idade: :integer, codmunres: :integer, causabas_o: :string]
+  @fields [year: :integer, numerodo: :integer, idade: :integer, codmunres: :integer, causabas_o: :string]
 
   defp parse_and_seed(values) do
     {:ok, _death_registry} =

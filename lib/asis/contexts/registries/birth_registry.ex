@@ -8,6 +8,8 @@ defmodule Asis.Contexts.Registries.BirthRegistry do
   alias Asis.Contexts.Registries.BirthRegistry
 
   schema "birth_registries" do
+    field :year, :integer
+
     # Source
     field :numerodn, :integer
     field :codmunnasc, :integer
@@ -18,7 +20,7 @@ defmodule Asis.Contexts.Registries.BirthRegistry do
   @spec changeset(%BirthRegistry{}, map()) :: Ecto.Changeset.t()
   def changeset(birth_registry, attrs) do
     birth_registry
-    |> cast(attrs, [:numerodn, :codmunnasc, :codmunres])
+    |> cast(attrs, [:year, :numerodn, :codmunnasc, :codmunres])
     |> validate_required([:numerodn])
   end
 end

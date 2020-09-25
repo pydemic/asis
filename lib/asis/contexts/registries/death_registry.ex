@@ -10,6 +10,7 @@ defmodule Asis.Contexts.Registries.DeathRegistry do
   schema "death_registries" do
     field :disease_id, :string
     field :sub_disease_id, :string
+    field :year, :integer
 
     # Source
     field :numerodo, :integer
@@ -22,7 +23,7 @@ defmodule Asis.Contexts.Registries.DeathRegistry do
   @spec changeset(%DeathRegistry{}, map()) :: Ecto.Changeset.t()
   def changeset(death_registry, attrs) do
     death_registry
-    |> cast(attrs, [:disease_id, :sub_disease_id, :numerodo, :idade, :codmunres, :causabas_o])
+    |> cast(attrs, [:disease_id, :sub_disease_id, :year, :numerodo, :idade, :codmunres, :causabas_o])
     |> validate_required([:numerodo])
   end
 end

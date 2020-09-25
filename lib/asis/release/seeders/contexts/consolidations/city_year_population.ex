@@ -7,11 +7,13 @@ defmodule Asis.Release.Seeders.Contexts.Consolidations.CityYearPopulation do
   alias Asis.Contexts.Consolidations.CitiesYearPopulation
   alias Asis.Release.Seeders.CSVSeeder
 
-  @path "consolidations/cities_year_population.csv"
+  @path "consolidations/br/rr/cities_year_population"
 
   @spec seed(keyword()) :: :ok
   def seed(opts \\ []) do
-    CSVSeeder.seed(@path, &parse_and_seed/1, opts)
+    CSVSeeder.seed(Path.join(@path, "2018.csv"), &parse_and_seed/1, opts)
+    CSVSeeder.seed(Path.join(@path, "2019.csv"), &parse_and_seed/1, opts)
+    CSVSeeder.seed(Path.join(@path, "2020.csv"), &parse_and_seed/1, opts)
   end
 
   @fields [

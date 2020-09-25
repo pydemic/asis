@@ -1,16 +1,16 @@
 "id","name","abbr","lat","lng","microregion_id","health_region_id"
-140002,"Amajari","Amajari",0.0,0.0,14001,-14001
-140005,"Alto Alegre","Alto Alegre",0.0,0.0,14001,-14001
-140010,"Boa Vista","Boa Vista",0.0,0.0,14001,-14001
-140015,"Bonfim","Bonfim",0.0,0.0,14002,-14001
-140017,"Cantá","Cantá",0.0,0.0,14002,-14001
-140020,"Caracaraí","Caracaraí",0.0,0.0,14003,-14002
-140023,"Caroebe","Caroebe",0.0,0.0,14004,-14002
-140028,"Iracema","Iracema",0.0,0.0,14003,-14002
-140030,"Mucajaí","Mucajaí",0.0,0.0,14003,-14001
-140040,"Normandia","Normandia",0.0,0.0,14002,-14001
-140045,"Pacaraima","Pacaraima",0.0,0.0,14001,-14001
-140047,"Rorainópolis","Rorainópolis",0.0,0.0,14004,-14002
-140050,"São João da Baliza","São João da Baliza",0.0,0.0,14004,-14002
-140060,"São Luiz","São Luiz",0.0,0.0,14004,-14002
-140070,"Uiramutã","Uiramutã",0.0,0.0,14002,-14001
+1400027,"Amajari","Amajari",0.0,0.0,14001,-14001
+1400050,"Alto Alegre","Alto Alegre",0.0,0.0,14001,-14001
+1400100,"Boa Vista","Boa Vista",0.0,0.0,14001,-14001
+1400159,"Bonfim","Bonfim",0.0,0.0,14002,-14001
+1400175,"Cantá","Cantá",0.0,0.0,14002,-14001
+1400209,"Caracaraí","Caracaraí",0.0,0.0,14003,-14002
+1400233,"Caroebe","Caroebe",0.0,0.0,14004,-14002
+1400282,"Iracema","Iracema",0.0,0.0,14003,-14002
+1400308,"Mucajaí","Mucajaí",0.0,0.0,14003,-14001
+1400407,"Normandia","Normandia",0.0,0.0,14002,-14001
+1400456,"Pacaraima","Pacaraima",0.0,0.0,14001,-14001
+1400472,"Rorainópolis","Rorainópolis",0.0,0.0,14004,-14002
+1400506,"São João da Baliza","São João da Baliza",0.0,0.0,14004,-14002
+1400605,"São Luiz","São Luiz",0.0,0.0,14004,-14002
+1400704,"Uiramutã","Uiramutã",0.0,0.0,14002,-14001

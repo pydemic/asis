@@ -3,6 +3,8 @@ defmodule Asis.Repo.Migrations.CreateBirthRegistries do
 
   def change do
     create table(:birth_registries) do
+      add :year, :integer
+
       # Source
       add :numerodn, :integer
       add :codmunnasc, :integer

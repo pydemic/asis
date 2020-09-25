@@ -5,6 +5,7 @@ defmodule Asis.Repo.Migrations.CreateDeathRegistries do
     create table(:death_registries) do
       add :disease_id, :string
       add :sub_disease_id, :string
+      add :year, :integer
 
       # Source
       add :numerodo, :integer

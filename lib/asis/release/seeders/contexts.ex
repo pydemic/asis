@@ -9,8 +9,12 @@ defmodule Asis.Release.Seeders.Contexts do
 
   @spec seed_all(keyword()) :: :ok
   def seed_all(opts \\ []) do
-    maybe_load_app(opts)
+    opts
+    |> maybe_load_app()
+    |> do_seed_all()
+  end
 
+  defp do_seed_all(opts) do
     Contexts.ICD10.seed(opts)
     Contexts.Geo.seed(opts)
     Contexts.Registries.seed(opts)
@@ -20,6 +24,9 @@ defmodule Asis.Release.Seeders.Contexts do
   defp maybe_load_app(opts) do
     if Keyword.get(opts, :load?, false) == true do
       Application.load(@app)
+      opts
+    else
+      opts
     end
   end
 end
