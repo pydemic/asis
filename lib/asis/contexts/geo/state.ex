@@ -34,6 +34,7 @@ defmodule Asis.Contexts.Geo.State do
     state
     |> cast(attrs, [:id, :abbr, :lat, :lng, :name, :region_id, :country_id, :continent_id, :world_id])
     |> validate_required([:id, :abbr, :lat, :lng, :name, :region_id])
+    |> unique_constraint(:id)
     |> maybe_add_parents_of_parent()
   end
 

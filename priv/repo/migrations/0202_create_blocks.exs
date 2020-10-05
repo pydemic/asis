@@ -7,10 +7,7 @@ defmodule Asis.Repo.Migrations.CreateBlocks do
       add :name, :string
 
       add :chapter_id, references(:chapters, on_delete: :delete_all, type: :string), null: false
-      add :parent_block_id, references(:blocks, on_delete: :nothing, type: :string)
+      add :parent_block_id, references(:blocks, on_delete: :nilify_all, type: :string)
     end
-
-    create index(:blocks, [:parent_block_id])
-    create index(:blocks, [:chapter_id])
   end
 end

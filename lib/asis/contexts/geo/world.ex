@@ -32,5 +32,6 @@ defmodule Asis.Contexts.Geo.World do
     world
     |> cast(attrs, [:id, :name, :abbr, :lat, :lng])
     |> validate_required([:id, :name, :abbr, :lat, :lng])
+    |> unique_constraint(:id)
   end
 end

@@ -60,6 +60,7 @@ defmodule Asis.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:colour_hash, "~> 1.0.3"},
       {:credo, "~> 1.4.0", only: :test, runtime: false},
       {:ecto_sql, "~> 3.4"},
       {:ex_doc, "~> 0.22.2", only: :test, runtime: false},
@@ -70,16 +71,17 @@ defmodule Asis.MixProject do
       {:jason, "~> 1.0"},
       {:kaffy, "~> 0.9.0"},
       {:nimble_csv, "~> 0.7.0"},
-      {:phoenix_ecto, "~> 4.1"},
-      {:phoenix_html, "~> 2.11"},
-      {:phoenix_live_dashboard, "~> 0.2"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.13.0"},
-      {:phoenix, "~> 1.5.4"},
-      {:plug_cowboy, "~> 2.0"},
-      {:postgrex, ">= 0.0.0"},
-      {:telemetry_metrics, "~> 0.4"},
-      {:telemetry_poller, "~> 0.4"},
+      {:phoenix_ecto, "~> 4.2.1"},
+      {:phoenix_html, "~> 2.14.2"},
+      {:phoenix_live_dashboard, "~> 0.2.9"},
+      {:phoenix_live_reload, "~> 1.2.4", only: :dev},
+      {:phoenix_live_view, "~> 0.14.7"},
+      {:phoenix, "~> 1.5.5"},
+      {:plug_cowboy, "~> 2.3.0"},
+      {:postgrex, "~> 0.15.6"},
+      {:statistics, "~> 0.6.2"},
+      {:telemetry_metrics, "~> 0.5.0"},
+      {:telemetry_poller, "~> 0.5.1"},
       {:tesla, "~> 1.3.3"}
     ]
   end

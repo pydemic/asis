@@ -1,8 +1,8 @@
-defmodule Asis.Repo.Migrations.CreateCities do
+defmodule Asis.Repo.Migrations.CreateMicroregions do
   use Ecto.Migration
 
   def change do
-    create table(:cities) do
+    create table(:microregions) do
       add :name, :string
       add :abbr, :string
       add :lat, :float
@@ -14,17 +14,6 @@ defmodule Asis.Repo.Migrations.CreateCities do
       add :region_id, references(:regions, on_delete: :delete_all), null: false
       add :state_id, references(:states, on_delete: :delete_all), null: false
       add :mesoregion_id, references(:mesoregions, on_delete: :delete_all), null: false
-      add :microregion_id, references(:microregions, on_delete: :delete_all), null: false
-      add :health_region_id, references(:health_regions, on_delete: :delete_all), null: false
     end
-
-    create index(:cities, [:world_id])
-    create index(:cities, [:continent_id])
-    create index(:cities, [:country_id])
-    create index(:cities, [:region_id])
-    create index(:cities, [:state_id])
-    create index(:cities, [:mesoregion_id])
-    create index(:cities, [:microregion_id])
-    create index(:cities, [:health_region_id])
   end
 end

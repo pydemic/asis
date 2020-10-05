@@ -24,7 +24,7 @@ defmodule AsisWeb.Endpoint do
     at: "/",
     from: :asis,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css geojson fonts images js favicon.ico robots.txt)
 
   plug Plug.Static,
     at: "/kaffy",

@@ -37,6 +37,7 @@ defmodule Asis.Contexts.Geo.Country do
     country
     |> cast(attrs, [:id, :name, :abbr, :lat, :lng, :continent_id, :world_id])
     |> validate_required([:id, :name, :abbr, :lat, :lng, :continent_id])
+    |> unique_constraint(:id)
     |> maybe_add_parent_of_parent()
   end
 

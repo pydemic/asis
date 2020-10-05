@@ -6,8 +6,5 @@ defmodule Asis.Repo.Migrations.CreateBlockDiseases do
       add :block_id, references(:blocks, on_delete: :delete_all, type: :string), null: false
       add :disease_id, references(:diseases, on_delete: :delete_all, type: :string), null: false
     end
-
-    create index(:block_diseases, [:block_id])
-    create index(:block_diseases, [:disease_id])
   end
 end

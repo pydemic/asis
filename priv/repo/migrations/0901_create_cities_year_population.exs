@@ -14,14 +14,15 @@ defmodule Asis.Repo.Migrations.CreateCitiesYearPopulation do
       add :age_60_69, :integer
       add :age_70_79, :integer
       add :age_80_or_more, :integer
+
       add :female, :integer
       add :male, :integer
+
       add :total, :integer
+
       add :year, :integer
 
       add :city_id, references(:cities, on_delete: :delete_all), null: false
     end
-
-    create index(:cities_year_population, [:city_id])
   end
 end

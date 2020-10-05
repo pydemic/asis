@@ -26,5 +26,6 @@ defmodule Asis.Contexts.ICD10.Block do
     block
     |> cast(attrs, [:id, :name, :chapter_id, :parent_block_id])
     |> validate_required([:id, :name, :chapter_id])
+    |> unique_constraint(:id)
   end
 end

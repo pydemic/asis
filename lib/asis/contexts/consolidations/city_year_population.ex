@@ -9,24 +9,24 @@ defmodule Asis.Contexts.Consolidations.CityYearPopulation do
   alias Asis.Contexts.Geo
 
   schema "cities_year_population" do
-    field :age_0_4, :integer
-    field :age_5_9, :integer
-    field :age_10_14, :integer
-    field :age_15_19, :integer
-    field :age_20_29, :integer
-    field :age_30_39, :integer
-    field :age_40_49, :integer
-    field :age_50_59, :integer
-    field :age_60_69, :integer
-    field :age_70_79, :integer
-    field :age_80_or_more, :integer
+    field :age_0_4, :integer, default: 0
+    field :age_5_9, :integer, default: 0
+    field :age_10_14, :integer, default: 0
+    field :age_15_19, :integer, default: 0
+    field :age_20_29, :integer, default: 0
+    field :age_30_39, :integer, default: 0
+    field :age_40_49, :integer, default: 0
+    field :age_50_59, :integer, default: 0
+    field :age_60_69, :integer, default: 0
+    field :age_70_79, :integer, default: 0
+    field :age_80_or_more, :integer, default: 0
 
-    field :female, :integer
-    field :male, :integer
+    field :female, :integer, default: 0
+    field :male, :integer, default: 0
 
-    field :total, :integer
+    field :total, :integer, default: 0
 
-    field :year, :integer
+    field :year, :integer, default: 0
 
     belongs_to :city, Geo.City
   end

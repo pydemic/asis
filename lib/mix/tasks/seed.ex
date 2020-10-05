@@ -36,6 +36,7 @@ defmodule Mix.Tasks.Seed do
     case context do
       "consolidations" -> Consolidations.seed(opts)
       "consolidations.city_year_population" -> Consolidations.CityYearPopulation.seed(opts)
+      "consolidations.penta_year_coverage" -> Consolidations.PentaYearCoverage.seed(opts)
       "icd_10" -> ICD10.seed(opts)
       "icd_10.block" -> ICD10.Block.seed(opts)
       "icd_10.chapter" -> ICD10.Chapter.seed(opts)
@@ -52,6 +53,7 @@ defmodule Mix.Tasks.Seed do
       "geo.world" -> Geo.World.seed(opts)
       "registries" -> Registries.seed(opts)
       "registries.birth_registry" -> Registries.BirthRegistry.seed(opts)
+      "registries.covid_registry" -> Registries.CovidRegistry.seed(opts)
       "registries.death_registry" -> Registries.DeathRegistry.seed(opts)
       "registries.morbidity_registry" -> Registries.MorbidityRegistry.seed(opts)
       _ -> :ok

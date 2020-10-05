@@ -17,6 +17,7 @@ defmodule AsisWeb do
   and import those modules here.
   """
 
+  @spec controller :: {:__block__, list(), list()}
   def controller do
     quote do
       use Phoenix.Controller, namespace: AsisWeb
@@ -27,6 +28,7 @@ defmodule AsisWeb do
     end
   end
 
+  @spec view :: {:__block__, list(), list()}
   def view do
     quote do
       use Phoenix.View,
@@ -42,6 +44,7 @@ defmodule AsisWeb do
     end
   end
 
+  @spec live_view :: {:__block__, list(), list()}
   def live_view do
     quote do
       use Phoenix.LiveView,
@@ -51,6 +54,7 @@ defmodule AsisWeb do
     end
   end
 
+  @spec live_component :: {:__block__, list(), list()}
   def live_component do
     quote do
       use Phoenix.LiveComponent
@@ -59,6 +63,7 @@ defmodule AsisWeb do
     end
   end
 
+  @spec router :: {:__block__, list(), list()}
   def router do
     quote do
       use Phoenix.Router
@@ -69,6 +74,7 @@ defmodule AsisWeb do
     end
   end
 
+  @spec channel :: {:__block__, list(), list()}
   def channel do
     quote do
       use Phoenix.Channel
@@ -97,6 +103,7 @@ defmodule AsisWeb do
   @doc """
   When used, dispatch to the appropriate controller/view/etc.
   """
+  @spec __using__(atom()) :: any()
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
   end

@@ -33,6 +33,7 @@ defmodule Asis.Contexts.Geo.HealthRegion do
     health_region
     |> cast(attrs, [:id, :name, :abbr, :lat, :lng, :state_id, :region_id, :country_id, :continent_id, :world_id])
     |> validate_required([:id, :name, :abbr, :lat, :lng, :state_id])
+    |> unique_constraint(:id)
     |> maybe_add_parents_of_parent()
   end
 

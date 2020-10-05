@@ -37,6 +37,7 @@ defmodule Asis.Contexts.Geo.City do
     city
     |> cast(attrs, cast_fields())
     |> validate_required([:id, :name, :abbr, :lat, :lng, :microregion_id])
+    |> unique_constraint(:id)
     |> maybe_add_parents_of_parent()
   end
 

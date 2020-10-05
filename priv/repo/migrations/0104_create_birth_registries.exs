@@ -5,10 +5,8 @@ defmodule Asis.Repo.Migrations.CreateBirthRegistries do
     create table(:birth_registries) do
       add :year, :integer
 
-      # Source
-      add :numerodn, :integer
-      add :codmunnasc, :integer
-      add :codmunres, :integer
+      add :city_id, :integer
+      add :home_city_id, :integer
     end
   end
 end

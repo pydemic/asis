@@ -23,5 +23,6 @@ defmodule Asis.Contexts.ICD10.Chapter do
     chapter
     |> cast(attrs, [:id, :name, :code_start, :code_end])
     |> validate_required([:id, :name, :code_start, :code_end])
+    |> unique_constraint(:id)
   end
 end

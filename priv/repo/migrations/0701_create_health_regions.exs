@@ -14,11 +14,5 @@ defmodule Asis.Repo.Migrations.CreateHealthRegions do
       add :region_id, references(:regions, on_delete: :delete_all), null: false
       add :state_id, references(:states, on_delete: :delete_all), null: false
     end
-
-    create index(:health_regions, [:world_id])
-    create index(:health_regions, [:continent_id])
-    create index(:health_regions, [:country_id])
-    create index(:health_regions, [:region_id])
-    create index(:health_regions, [:state_id])
   end
 end

@@ -7,23 +7,24 @@ defmodule Asis.Contexts.Registries.DeathRegistry do
   import Ecto.Changeset
   alias Asis.Contexts.Registries.DeathRegistry
 
+  @primary_key {:id, :integer, autogenerate: false}
   schema "death_registries" do
-    field :disease_id, :string
-    field :sub_disease_id, :string
     field :year, :integer
 
-    # Source
-    field :numerodo, :integer
-    field :idade, :integer
-    field :codmunres, :integer
-    field :causabas_o, :string
+    field :age, :integer
+
+    field :city_id, :integer
+
+    field :disease_id, :string
+    field :sub_disease_id, :string
   end
 
   @doc false
   @spec changeset(%DeathRegistry{}, map()) :: Ecto.Changeset.t()
   def changeset(death_registry, attrs) do
     death_registry
-    |> cast(attrs, [:disease_id, :sub_disease_id, :year, :numerodo, :idade, :codmunres, :causabas_o])
-    |> validate_required([:numerodo])
+    |> cast(attrs, [:id, :year, :age, :city_id, :disease_id, :sub_disease_id])
+    |> validate_required([:id, :year, :age, :city_id, :disease_id])
+    |> unique_constraint(:id)
   end
 end

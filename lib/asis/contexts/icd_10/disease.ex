@@ -23,5 +23,6 @@ defmodule Asis.Contexts.ICD10.Disease do
     disease
     |> cast(attrs, [:id, :name])
     |> validate_required([:id, :name])
+    |> unique_constraint(:id)
   end
 end

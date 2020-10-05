@@ -7,20 +7,20 @@ defmodule Asis.Contexts.Registries.BirthRegistry do
   import Ecto.Changeset
   alias Asis.Contexts.Registries.BirthRegistry
 
+  @primary_key {:id, :integer, autogenerate: false}
   schema "birth_registries" do
     field :year, :integer
 
-    # Source
-    field :numerodn, :integer
-    field :codmunnasc, :integer
-    field :codmunres, :integer
+    field :city_id, :integer
+    field :home_city_id, :integer
   end
 
   @doc false
   @spec changeset(%BirthRegistry{}, map()) :: Ecto.Changeset.t()
   def changeset(birth_registry, attrs) do
     birth_registry
-    |> cast(attrs, [:year, :numerodn, :codmunnasc, :codmunres])
-    |> validate_required([:numerodn])
+    |> cast(attrs, [:id, :year, :city_id, :home_city_id])
+    |> validate_required([:id, :year, :city_id, :home_city_id])
+    |> unique_constraint(:id)
   end
 end

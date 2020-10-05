@@ -13,6 +13,12 @@ defmodule Asis.Contexts.Geo.States do
     |> Repo.insert()
   end
 
+  @spec get(integer()) :: %State{} | nil
+  def get(id) do
+    State
+    |> Repo.get(id)
+  end
+
   @spec get!(integer()) :: %State{}
   def get!(id) do
     State

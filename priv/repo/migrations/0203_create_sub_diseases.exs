@@ -8,7 +8,5 @@ defmodule Asis.Repo.Migrations.CreateSubDiseases do
 
       add :disease_id, references(:diseases, on_delete: :delete_all, type: :string), null: false
     end
-
-    create index(:sub_diseases, [:disease_id])
   end
 end

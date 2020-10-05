@@ -8,6 +8,7 @@ defmodule Asis.Release.Seeders.Contexts.Registries do
   @spec seed(keyword()) :: :ok
   def seed(opts \\ []) do
     Registries.BirthRegistry.seed(opts)
+    Registries.CovidRegistry.seed(opts)
     Registries.DeathRegistry.seed(opts)
     Registries.MorbidityRegistry.seed(opts)
   end

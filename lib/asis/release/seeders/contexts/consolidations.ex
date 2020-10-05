@@ -8,5 +8,6 @@ defmodule Asis.Release.Seeders.Contexts.Consolidations do
   @spec seed(keyword()) :: :ok
   def seed(opts \\ []) do
     Consolidations.CityYearPopulation.seed(opts)
+    Consolidations.PentaYearCoverage.seed(opts)
   end
 end

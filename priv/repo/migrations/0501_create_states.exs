@@ -13,10 +13,5 @@ defmodule Asis.Repo.Migrations.CreateStates do
       add :country_id, references(:countries, on_delete: :delete_all), null: false
       add :region_id, references(:regions, on_delete: :delete_all), null: false
     end
-
-    create index(:states, [:world_id])
-    create index(:states, [:continent_id])
-    create index(:states, [:country_id])
-    create index(:states, [:region_id])
   end
 end

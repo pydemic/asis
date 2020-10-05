@@ -16,7 +16,7 @@ defmodule Asis.Release.Seeders.Contexts.Registries.DeathRegistry do
     CSVSeeder.seed(Path.join(@path, "2020.csv"), &parse_and_seed/1, opts)
   end
 
-  @fields [year: :integer, numerodo: :integer, idade: :integer, codmunres: :integer, causabas_o: :string]
+  @fields [id: :integer, death_date: :string, age: :integer, city_id: :integer, disease_id_or_sub_disease_id: :string]
 
   defp parse_and_seed(values) do
     {:ok, _death_registry} =
@@ -25,21 +25,17 @@ defmodule Asis.Release.Seeders.Contexts.Registries.DeathRegistry do
       |> Enum.reduce(%{}, &parse_value/2)
       |> Registries.DeathRegistries.create()
   rescue
-    error -> Logger.error(Exception.message(error))
+    error -> Logger.error(Exception.message(error) <> "\nValues: " <> inspect(values))
   end
 
-  defp parse_value({{_field, _type}, nil}, map), do: map
-  defp parse_value({{_field, _type}, ""}, map), do: map
-  defp parse_value({{:causabas_o, _type}, value}, map) when is_binary(value), do: parse_disease(map, value)
-  defp parse_value({{field, :integer}, value}, map) when is_integer(value), do: Map.put(map, field, value)
-  defp parse_value({{field, :integer}, value}, map) when is_binary(value), do: parse_integer(map, field, value)
-  defp parse_value({{field, :string}, value}, map) when is_binary(value), do: Map.put(map, field, value)
-  defp parse_value({{field, :string}, value}, map), do: Map.put(map, field, to_string(value))
-  defp parse_value(_, map), do: map
+  defp parse_value({{:death_date, _type}, value}, map), do: parse_death_date(map, value)
+  defp parse_value({{:disease_id_or_sub_disease_id, _type}, value}, map), do: parse_disease(map, value)
+  defp parse_value({{:age, _type}, ""}, map), do: Map.put(map, :age, -1)
+  defp parse_value({{field, :integer}, value}, map), do: Map.put(map, field, String.to_integer(value))
+  defp parse_value({{_field, :string}, ""}, map), do: map
+  defp parse_value({{field, :string}, value}, map), do: Map.put(map, field, value)
 
   defp parse_disease(map, value) do
-    map = Map.put(map, :causabas_o, value)
-
     case String.length(value) do
       3 ->
         Map.put(map, :disease_id, value)
@@ -59,17 +55,16 @@ defmodule Asis.Release.Seeders.Contexts.Registries.DeathRegistry do
         map
         |> Map.put(:disease_id, disease_id)
         |> Map.put(:sub_disease_id, sub_disease_id)
-
-      _length ->
-        map
     end
   end
 
-  defp parse_integer(map, field, value) do
-    Map.put(map, field, String.to_integer(value))
-  rescue
-    _error ->
-      Logger.warn(~s(Field "#{field}" with value "#{value}" cannot be converted to integer))
-      map
+  defp parse_death_date(map, value) do
+    value =
+      case String.length(value) do
+        7 -> String.slice(value, 3, 4)
+        8 -> String.slice(value, 4, 4)
+      end
+
+    Map.put(map, :year, String.to_integer(value))
   end
 end

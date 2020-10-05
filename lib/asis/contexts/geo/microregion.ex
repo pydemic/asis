@@ -34,6 +34,7 @@ defmodule Asis.Contexts.Geo.Microregion do
     microregion
     |> cast(attrs, cast_fields())
     |> validate_required([:id, :name, :abbr, :lat, :lng, :mesoregion_id])
+    |> unique_constraint(:id)
     |> maybe_add_parents_of_parent()
   end
 

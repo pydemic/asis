@@ -6,7 +6,6 @@
   "shutdownAction": "none",
   "extensions": [
     "davidanson.vscode-markdownlint",
-    "HookyQR.beautify",
     "jakebecker.elixir-ls",
     "mechatroner.rainbow-csv",
     "mrorz.language-gettext",
@@ -47,12 +46,6 @@
     "files.associations": {
       "*.eex": "html-eex",
       "*.leex": "html-eex"
-    },
-    "[javascript]": {
-      "editor.defaultFormatter": "HookyQR.beautify"
-    },
-    "[html-eex]": {
-      "editor.defaultFormatter": "HookyQR.beautify"
     }
   }
 }

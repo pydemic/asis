@@ -35,5 +35,6 @@ defmodule Asis.Contexts.Geo.Continent do
     continent
     |> cast(attrs, [:id, :name, :abbr, :lat, :lng, :world_id])
     |> validate_required([:id, :name, :abbr, :lat, :lng, :world_id])
+    |> unique_constraint(:id)
   end
 end
