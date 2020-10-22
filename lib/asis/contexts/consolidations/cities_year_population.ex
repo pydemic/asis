@@ -3,7 +3,7 @@ defmodule Asis.Contexts.Consolidations.CitiesYearPopulation do
   Manage `Asis.Contexts.Consolidations.CityYearPopulation`.
   """
 
-  import Ecto.Query, only: [where: 3]
+  import Ecto.Query, only: [select: 3, where: 3]
   alias Asis.Contexts.Consolidations.CityYearPopulation
   alias Asis.Repo
 
@@ -20,6 +20,21 @@ defmodule Asis.Contexts.Consolidations.CitiesYearPopulation do
     |> Repo.all()
   end
 
+  @spec list_by(keyword()) :: list(%CityYearPopulation{})
+  def list_by(params) do
+    CityYearPopulation
+    |> filter_by_params(params)
+    |> Repo.all()
+  end
+
+  @spec sum_by(atom(), keyword()) :: integer()
+  def sum_by(field, params) do
+    CityYearPopulation
+    |> filter_by_params(params)
+    |> select([cyp], sum(field(cyp, ^field)))
+    |> Repo.one()
+  end
+
   @spec create(map()) :: {:ok, %CityYearPopulation{}} | {:error, Ecto.Changeset.t()}
   def create(attrs \\ %{}) do
     %CityYearPopulation{}
@@ -27,25 +42,18 @@ defmodule Asis.Contexts.Consolidations.CitiesYearPopulation do
     |> Repo.insert()
   end
 
-  @spec add(%CityYearPopulation{}, %CityYearPopulation{}) :: %CityYearPopulation{}
-  def add(from, to) do
-    fields = [
-      :age_0_4,
-      :age_5_9,
-      :age_10_14,
-      :age_15_19,
-      :age_20_29,
-      :age_30_39,
-      :age_40_49,
-      :age_50_59,
-      :age_60_69,
-      :age_70_79,
-      :age_80_or_more,
-      :female,
-      :male,
-      :total
-    ]
+  defp filter_by_params(query, params) do
+    if Enum.any?(params) do
+      [param | params] = params
 
-    Enum.reduce(fields, to, &Map.update(&2, &1, 0, fn value -> value + Map.get(from, &1) end))
+      case param do
+        {:cities, cities} -> where(query, [cyp], cyp.city_id in ^cities)
+        {:year, year} -> where(query, [cyp], cyp.year == ^year)
+        _unknown_param -> query
+      end
+      |> filter_by_params(params)
+    else
+      query
+    end
   end
 end

@@ -11,6 +11,7 @@ defmodule Asis.Repo.Migrations.CreateDeathRegistries do
 
       add :disease_id, :string
       add :sub_disease_id, :string
+      add :chapter_id, :string
     end
   end
 end

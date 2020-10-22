@@ -33,12 +33,11 @@ defmodule AsisWeb.RoraimaLive.Renderings.Filters do
     """
   end
 
-  defp year_period(assigns) do
-    from_options = Map.get(assigns, :year_from_options, [{"Não escolhido", nil}])
-    from_default = Map.get(assigns, :year_from)
+  defp year_period(%{params: params} = assigns) do
+    %{year_from: from, year_from_options: from_options, year_to: to, year_to_options: to_options} = params
 
-    to_options = Map.get(assigns, :year_to_options, [{"Não escolhido", nil}])
-    to_default = Map.get(assigns, :year_to)
+    from_options = Enum.zip(from_options, from_options)
+    to_options = Enum.zip(to_options, to_options)
 
     ~L"""
     <div class="uk-width-1-5@l uk-width-1-2@m">
@@ -49,11 +48,11 @@ defmodule AsisWeb.RoraimaLive.Renderings.Filters do
           <div class="uk-accordion-content">
             <div class="uk-grid uk-grid-small uk-grid-match" uk-grid>
               <div class="uk-width-1-2@m">
-                <%= select assigns, "year_from", from_options, from_default %>
+                <%= select assigns, "year_from", from_options, from %>
               </div>
 
               <div class="uk-width-1-2@m">
-                <%= select assigns, "year_to", to_options, to_default %>
+                <%= select assigns, "year_to", to_options, to %>
               </div>
             </div>
           </div>
@@ -63,12 +62,11 @@ defmodule AsisWeb.RoraimaLive.Renderings.Filters do
     """
   end
 
-  defp week_period(assigns) do
-    from_options = Map.get(assigns, :week_from_options, [{"Não escolhida", nil}])
-    from_default = Map.get(assigns, :week_from)
+  defp week_period(%{params: params} = assigns) do
+    %{week_from: from, week_from_options: from_options, week_to: to, week_to_options: to_options} = params
 
-    to_options = Map.get(assigns, :week_to_options, [{"Não escolhida", nil}])
-    to_default = Map.get(assigns, :week_to)
+    from_options = Enum.zip(from_options, from_options)
+    to_options = Enum.zip(to_options, to_options)
 
     ~L"""
     <div class="uk-width-1-5@l uk-width-1-2@m">
@@ -79,11 +77,11 @@ defmodule AsisWeb.RoraimaLive.Renderings.Filters do
           <div class="uk-accordion-content">
             <div class="uk-grid uk-grid-small uk-grid-match" uk-grid>
               <div class="uk-width-1-2@m">
-                <%= select assigns, "week_from", from_options, from_default %>
+                <%= select assigns, "week_from", from_options, from %>
               </div>
 
               <div class="uk-width-1-2@m">
-                <%= select assigns, "week_to", to_options, to_default %>
+                <%= select assigns, "week_to", to_options, to %>
               </div>
             </div>
           </div>
@@ -93,9 +91,10 @@ defmodule AsisWeb.RoraimaLive.Renderings.Filters do
     """
   end
 
-  defp health_region(assigns) do
-    options = [{"Não escolhida", nil}] ++ Map.get(assigns, :health_region_options, [])
-    default = Map.get(assigns, :health_region_id)
+  defp health_region(%{params: params} = assigns) do
+    %{health_region_options: options, health_region_id: id} = params
+
+    options = [{"Não escolhida", nil}] ++ Enum.map(options, fn %{id: id, name: name} -> {name, id} end)
 
     ~L"""
     <div class="uk-width-1-5@l uk-width-1-2@m">
@@ -104,7 +103,7 @@ defmodule AsisWeb.RoraimaLive.Renderings.Filters do
           <a class="uk-accordion-title" href="#">Região de Saúde</a>
 
           <div class="uk-accordion-content">
-            <%= select assigns, "health_region", options, default %>
+            <%= select assigns, "health_region", options, id %>
           </div>
         </li>
       </ul>
@@ -112,9 +111,10 @@ defmodule AsisWeb.RoraimaLive.Renderings.Filters do
     """
   end
 
-  defp city(assigns) do
-    options = [{"Não escolhido", nil}] ++ Map.get(assigns, :city_options, [])
-    default = Map.get(assigns, :city_id)
+  defp city(%{params: params} = assigns) do
+    %{city_options: options, city_id: id} = params
+
+    options = [{"Não escolhido", nil}] ++ Enum.map(options, fn %{id: id, name: name} -> {name, id} end)
 
     ~L"""
     <div class="uk-width-1-5@l uk-width-1-2@m">
@@ -123,7 +123,7 @@ defmodule AsisWeb.RoraimaLive.Renderings.Filters do
           <a class="uk-accordion-title" href="#">Município</a>
 
           <div class="uk-accordion-content">
-            <%= select assigns, "city", options, default %>
+            <%= select assigns, "city", options, id %>
           </div>
         </li>
       </ul>
@@ -131,9 +131,10 @@ defmodule AsisWeb.RoraimaLive.Renderings.Filters do
     """
   end
 
-  defp morbidity(assigns) do
-    options = [{"Não escolhida", nil}] ++ Map.get(assigns, :morbidity_options, [])
-    default = Map.get(assigns, :morbidity_id)
+  defp morbidity(%{params: params} = assigns) do
+    %{morbidity_options: options, morbidity_id: id} = params
+
+    options = [{"Não escolhida", nil}] ++ Enum.map(options, fn %{id: id, name: name} -> {name, id} end)
 
     ~L"""
     <div class="uk-width-1-5@l">
@@ -142,7 +143,7 @@ defmodule AsisWeb.RoraimaLive.Renderings.Filters do
           <a class="uk-accordion-title" href="#">Doença / Agravo</a>
 
           <div class="uk-accordion-content">
-            <%= select assigns, "morbidity", options, default %>
+            <%= select assigns, "morbidity", options, id %>
           </div>
         </li>
       </ul>

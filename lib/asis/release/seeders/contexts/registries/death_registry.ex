@@ -56,7 +56,49 @@ defmodule Asis.Release.Seeders.Contexts.Registries.DeathRegistry do
         |> Map.put(:disease_id, disease_id)
         |> Map.put(:sub_disease_id, sub_disease_id)
     end
+    |> fetch_chapter()
   end
+
+  @chapters_ids [
+    {"I", [{"A", nil}, {"B", nil}]},
+    {"II", [{"C", nil}, {"D", {0, 48}}]},
+    {"III", [{"D", {50, 89}}]},
+    {"IV", [{"E", nil}]},
+    {"V", [{"F", nil}]},
+    {"VI", [{"G", nil}]},
+    {"VII", [{"H", {0, 59}}]},
+    {"VIII", [{"H", {60, 95}}]},
+    {"IX", [{"I", nil}]},
+    {"X", [{"J", nil}]},
+    {"XI", [{"K", nil}]},
+    {"XII", [{"L", nil}]},
+    {"XIII", [{"M", nil}]},
+    {"XIV", [{"N", nil}]},
+    {"XV", [{"O", nil}]},
+    {"XVI", [{"P", nil}]},
+    {"XVII", [{"Q", nil}]},
+    {"XVIII", [{"R", nil}]},
+    {"XIX", [{"S", nil}, {"T", nil}]},
+    {"XX", [{"V", nil}, {"W", nil}, {"X", nil}, {"Y", nil}]},
+    {"XXI", [{"Z", nil}]},
+    {"XXII", [{"U", nil}]}
+  ]
+
+  defp fetch_chapter(%{disease_id: disease_id} = map) do
+    {chapter_id, _ids} = Enum.find(@chapters_ids, &disease_id_match_chapter?(&1, disease_id))
+    Map.put(map, :chapter_id, chapter_id)
+  end
+
+  defp disease_id_match_chapter?({_chapter_id, ids}, disease_id) do
+    {letter, number} = String.split_at(disease_id, 1)
+    number = String.to_integer(number)
+
+    Enum.any?(ids, &disease_id_in_group?(&1, letter, number))
+  end
+
+  defp disease_id_in_group?({letter, nil}, letter, _number), do: true
+  defp disease_id_in_group?({letter, {from, to}}, letter, number), do: number >= from and number <= to
+  defp disease_id_in_group?(_group, _letter, _number), do: false
 
   defp parse_death_date(map, value) do
     value =

@@ -16,9 +16,9 @@ defmodule AsisWeb.RoraimaLive.RenderManager do
 
       <hr class="uk-margin-left uk-margin-right"/>
 
-      <%= Renderings.FirstRow.render assigns %>
-      <%= Renderings.SecondRow.render assigns %>
-      <%= Renderings.ThirdRow.render assigns %>
+      <%= Renderings.ScalarCards.render assigns %>
+      <%= Renderings.PlotCards.render assigns %>
+      <%= Renderings.TableCards.render assigns %>
     </div>
 
     <%= Renderings.JS.render assigns %>

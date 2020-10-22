@@ -12,11 +12,23 @@ defmodule Asis.Release.Seeders.Contexts.Registries.MorbidityRegistry do
   @spec seed(keyword()) :: :ok
   def seed(opts \\ []) do
     CSVSeeder.seed(Path.join(@path, "2018.csv"), &parse_and_seed/1, opts)
+    CSVSeeder.seed(Path.join(@path, "2018_chik.csv"), &parse_and_seed/1, opts)
+    CSVSeeder.seed(Path.join(@path, "2018_dengue.csv"), &parse_and_seed/1, opts)
     CSVSeeder.seed(Path.join(@path, "2019.csv"), &parse_and_seed/1, opts)
+    CSVSeeder.seed(Path.join(@path, "2019_chik.csv"), &parse_and_seed/1, opts)
+    CSVSeeder.seed(Path.join(@path, "2019_dengue.csv"), &parse_and_seed/1, opts)
     CSVSeeder.seed(Path.join(@path, "2020.csv"), &parse_and_seed/1, opts)
+    CSVSeeder.seed(Path.join(@path, "2020_chik.csv"), &parse_and_seed/1, opts)
+    CSVSeeder.seed(Path.join(@path, "2020_dengue.csv"), &parse_and_seed/1, opts)
   end
 
-  @fields [id: :integer, disease_id_or_sub_disease_id: :string, year_and_week: :string, city_id: :integer, age: :integer]
+  @fields [
+    id: :integer,
+    disease_id_or_sub_disease_id: :string,
+    year_and_week: :string,
+    city_id: :integer,
+    age: :integer
+  ]
 
   defp parse_and_seed(values) do
     {:ok, _morbidity_registry} =

@@ -15,8 +15,8 @@ defmodule AsisWeb.RoraimaLive.Renderings.Title do
     """
   end
 
-  defp location(assigns) do
-    case assigns do
+  defp location(%{params: params} = assigns) do
+    case params do
       %{state: %{abbr: state_abbr}, health_region: %{name: health_region_name}, city: %{name: city_name}} ->
         "#{city_name} (#{health_region_name}) - #{state_abbr}"
 

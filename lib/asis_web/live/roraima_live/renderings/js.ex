@@ -8,137 +8,40 @@ defmodule AsisWeb.RoraimaLive.Renderings.JS do
   alias AsisWeb.Router.Helpers, as: Routes
 
   @spec render(map()) :: LiveView.Rendered.t()
-  def render(assigns) do
+  def render(%{morbidity_data: morbidity_data} = assigns) do
     incidence_ratio_datasets =
-      assigns
-      |> Map.get(:morbidities, [])
+      morbidity_data
+      |> Map.get(:selected_period_data, %{})
+      |> Map.get(:incidences, [])
       |> Enum.map(fn m ->
-        %{label: m.name, data: m.ratios_per_year, borderColor: m.color, backgroundColor: m.color, fill: false}
+        %{label: m.name, data: m.ratios, borderColor: m.color, backgroundColor: m.color, fill: false}
       end)
       |> Jason.encode!()
 
     incidence_datasets =
-      assigns
-      |> Map.get(:morbidities, [])
+      morbidity_data
+      |> Map.get(:selected_local_data, %{})
+      |> Map.get(:incidences, [])
       |> Enum.map(fn m ->
-        %{label: m.name, data: [m.incidence_from_period], borderColor: m.color, backgroundColor: m.color, fill: false}
+        %{label: m.name, data: [m.incidence], borderColor: m.color, backgroundColor: m.color, fill: false}
       end)
       |> Jason.encode!()
 
+    selected_morbidity = Map.get(morbidity_data, :selected_morbidity_data, %{})
+
     map_data =
-      assigns
-      |> Map.get(:cities_morbidity, [])
+      selected_morbidity
+      |> Map.get(:incidences, [])
       |> Jason.encode!()
 
     map_legend =
-      assigns
-      |> Map.get(:cities_morbidity_legend, [])
-      |> Jason.encode!()
-
-    death_chart_cities_names =
-      assigns
-      |> Map.get(:city_options, [])
-      |> Enum.map(&elem(&1, 0))
-      |> Jason.encode!()
-
-    #   [
-    #     {
-    #       label: "Doenças infecciosas e parasitárias",
-    #       backgroundColor: "#A989C5",
-    #       borderColor: "#A989C5",
-    #       data: [10, 15, 20, 25]
-    #     },
-    #     {
-    #       label: "Neoplasmas",
-    #       backgroundColor: "#98D9D9",
-    #       borderColor: "#98D9D9",
-    #       data: [25, 20, 15, 10]
-    #     },
-    #     {
-    #       label: "Doenças do sangue e dos órgãos hematopoéticos e alguns transtornos imunitários",
-    #       backgroundColor: "#F2A86F",
-    #       borderColor: "#F2A86F",
-    #       data: [65, 65, 65, 65]
-    #     }
-    #   ]
-    # }
-
-    death_chart_datasets =
-      assigns
-      |> Map.get(:death_chart_datasets, [])
+      selected_morbidity
+      |> Map.get(:labels, [])
       |> Jason.encode!()
 
     ~L"""
     <script>
       window.onload = () => {
-        let incidence_ratio_chart = new ChartJS(
-          "incidence_ratio_chart",
-          {
-            type: "line",
-            data: {
-              labels: ["2018", "2019", "2020"],
-              datasets: <%= HTML.raw incidence_ratio_datasets %>
-            },
-            options: {
-              maintainAspectRatio: false,
-              responsive: true,
-              legend: false,
-              scales: {
-                xAxes: [{
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Ano"
-                  }
-                }],
-                yAxes: [{
-                  scaleLabel: {
-                    display: false,
-                    labelString: "Taxa de Incidência"
-                  },
-                  ticks: {
-                    beginAtZero: true
-                  }
-                }]
-              }
-            }
-          }
-        )
-
-        let incidence_chart = new ChartJS(
-          "incidence_chart",
-          {
-            type: "horizontalBar",
-            data: {
-              labels: ["Total de casos"],
-              datasets: <%= HTML.raw incidence_datasets %>
-            },
-            options: {
-              maintainAspectRatio: false,
-              responsive: true,
-              legend: false,
-              tooltips: {
-                position: "nearest"
-              },
-              scales: {
-                xAxes: [{
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Incidência"
-                  },
-                  ticks: {
-                    beginAtZero: true
-                  }
-                }],
-                yAxes: [{
-                  ticks: {
-                    display: false
-                  }
-                }]
-              }
-            }
-          }
-        )
-
         let map = L.map('incidence_ratio_map').setView([1.7679, -62.0751], 6)
 
         let mapData = <%= HTML.raw map_data %>
@@ -180,8 +83,10 @@ defmodule AsisWeb.RoraimaLive.Renderings.JS do
 
           this._legendDiv.innerHTML += "<h5>Taxa de Incidência</h5>"
 
-          for (let i = 0; i < mapLegend.length; i++) {
-            this._legendDiv.innerHTML += '<i style="background:' + mapLegend[i].color + '"></i> ' + mapLegend[i].label + "<br/>"
+          if (mapLegend !== null) {
+            for (let i = 0; i < mapLegend.length; i++) {
+              this._legendDiv.innerHTML += '<i style="background:' + mapLegend[i].color + '"></i> ' + mapLegend[i].text + "<br/>"
+            }
           }
 
           return this._legendDiv
@@ -252,31 +157,65 @@ defmodule AsisWeb.RoraimaLive.Renderings.JS do
           geoJson = L.geoJson(roraima, {style: geoJsonStyle, onEachFeature: onEachFeature}).addTo(map)
         })
 
-        let death_ratio_chart = new ChartJS(
-          "death_ratio_chart",
+        let incidence_ratio_chart = new ChartJS(
+          "incidence_ratio_chart",
           {
-            type: "bar",
+            type: "line",
             data: {
-              labels: <%= HTML.raw death_chart_cities_names %>,
-              datasets: <%= HTML.raw death_chart_datasets %>
+              labels: ["2018", "2019", "2020"],
+              datasets: <%= HTML.raw incidence_ratio_datasets %>
             },
             options: {
-              maintainAspectRatio: true,
+              maintainAspectRatio: false,
               responsive: true,
               legend: false,
               scales: {
                 xAxes: [{
-                  stacked: true,
                   scaleLabel: {
                     display: true,
-                    labelString: "Municípios"
+                    labelString: "Ano"
+                  }
+                }],
+                yAxes: [{
+                  scaleLabel: {
+                    display: false,
+                    labelString: "Taxa de Incidência"
+                  },
+                  ticks: {
+                    beginAtZero: true
+                  }
+                }]
+              }
+            }
+          }
+        )
+
+        let incidence_chart = new ChartJS(
+          "incidence_chart",
+          {
+            type: "horizontalBar",
+            data: {
+              labels: ["Total de casos"],
+              datasets: <%= HTML.raw incidence_datasets %>
+            },
+            options: {
+              maintainAspectRatio: false,
+              responsive: true,
+              legend: false,
+              tooltips: {
+                position: "nearest"
+              },
+              scales: {
+                xAxes: [{
+                  scaleLabel: {
+                    display: true,
+                    labelString: "Incidência"
                   },
                   ticks: {
                     beginAtZero: true
                   }
                 }],
                 yAxes: [{
-                  stacked: true,
                   ticks: {
                     display: false
                   }

@@ -45,10 +45,55 @@
   width: 10px !important;
 }
 
-.asis-roraima-table-item {
-  color: rgba(0,0,0,0.3);
+.asis-roraima-table {
+  width: auto;
+  margin: auto;
+  font-size: 11px;
 }
 
-.asis-roraima-table-item:hover {
-  color: rgba(0,0,0,1.0);
+.asis-roraima-morbidity-table-header {
+  height: 180px;
+}
+
+.asis-roraima-death-table-header {
+  height: 450px;
+}
+
+.asis-roraima-table-header > div {
+  width: 30px;
+  white-space: nowrap;
+  transform-origin: top left;
+  transform: rotate(-45deg) translate(8px, 34px);
+}
+
+.asis-roraima-table-header > div > span {
+  font-size: 11px !important;
+  border-bottom: 1px solid #222;
+}
+
+.asis-roraima-table-item {
+  border: 1px solid #222;
+  font-size: 10px;
+  width: 25px;
+  height: 25px;
+}
+
+.asis-roraima-table-q0 {
+  background-color: #CCC;
+}
+
+.asis-roraima-table-q1 {
+  background-color: #87CEEB;
+}
+
+.asis-roraima-table-q2 {
+  background-color: #DDDD55;
+}
+
+.asis-roraima-table-q3 {
+  background-color: #FF9257;
+}
+
+.asis-roraima-label-color {
+  border-radius: 25px;
 }

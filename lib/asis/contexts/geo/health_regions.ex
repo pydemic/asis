@@ -3,7 +3,7 @@ defmodule Asis.Contexts.Geo.HealthRegions do
   Manage `Asis.Contexts.Geo.HealthRegion`.
   """
 
-  import Ecto.Query, only: [where: 3]
+  import Ecto.Query, only: [order_by: 3, where: 3]
   alias Asis.Contexts.Geo.HealthRegion
   alias Asis.Repo
 
@@ -11,7 +11,13 @@ defmodule Asis.Contexts.Geo.HealthRegions do
   def list_by_state(state_id) do
     HealthRegion
     |> where([c], c.state_id == ^state_id)
+    |> order_by([c], c.name)
     |> Repo.all()
+  end
+
+  @spec get(integer()) :: %HealthRegion{} | nil
+  def get(id) do
+    Repo.get(HealthRegion, id)
   end
 
   @spec create(map()) :: {:ok, %HealthRegion{}} | {:error, Ecto.Changeset.t()}
